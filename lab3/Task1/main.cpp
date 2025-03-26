@@ -1,6 +1,5 @@
 #include <string>
 #include <vector>
-#include <iostream>
 
 int main() {
     auto i = int(0);
@@ -18,5 +17,5 @@ int main() {
 
     const int tryToModify = i;
     tryToModify++;
-    // this causes compiler error
+    // the line above causes a compiler error
 }
