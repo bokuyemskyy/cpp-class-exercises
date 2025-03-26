@@ -1,0 +1,1 @@
+int globalVariable = 10;
