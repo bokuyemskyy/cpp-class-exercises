@@ -1,0 +1,25 @@
+# ninja log v6
+2	56	1743179554577101532	lab2/Calculator/CMakeFiles/calculator.dir/Debug/src/calculator.cpp.o	f18064f17f6070e1
+56	93	1743179554633103012	lab3/Task4/CMakeFiles/task4.dir/Debug/add.cpp.o	3b3a8911b1d92949
+8	584	1743179554585101744	lab3/Task3/CMakeFiles/task3.dir/Debug/main.cpp.o	83378e7238bf712e
+5	603	1743179554581101638	lab3/Task2/CMakeFiles/task2.dir/Debug/main.cpp.o	c7ad379fb2547699
+4	632	1743179554581101638	lab2/Date/CMakeFiles/date.dir/Debug/main.cpp.o	af7810dbfc4cc161
+3	644	1743179554577101532	lab2/ClockCalendar/CMakeFiles/clockCalendar.dir/Debug/src/time.cpp.o	19b72b683f480518
+3	647	1743179554577101532	lab2/Changer/CMakeFiles/changer.dir/Debug/main.cpp.o	eefeecef5d74a3fe
+2	671	1743179554577101532	lab2/Calculator/CMakeFiles/calculator.dir/Debug/main.cpp.o	26c8722c22268ab5
+9	673	1743179554585101744	lab3/Task4/CMakeFiles/task4.dir/Debug/main.cpp.o	68374adae3d6d30f
+3	695	1743179554577101532	lab2/ClockCalendar/CMakeFiles/clockCalendar.dir/Debug/src/date.cpp.o	93d80753e13707b6
+4	697	1743179554581101638	lab2/NumberGame/CMakeFiles/numberGame.dir/Debug/main.cpp.o	6ab96b3c5e19b190
+4	726	1743179554581101638	lab2/Date/CMakeFiles/date.dir/Debug/src/date.cpp.o	fdd67d84de2a06f9
+93	747	1743179554669103964	lab3/Task5/CMakeFiles/task5.dir/Debug/main.cpp.o	55d1012516fcccde
+3	771	1743179554577101532	lab2/Converter/CMakeFiles/converter.dir/Debug/main.cpp.o	c7a6fa4fafef37c
+3	887	1743179554577101532	lab2/ClockCalendar/CMakeFiles/clockCalendar.dir/Debug/main.cpp.o	4dedf6cfc8864e11
+3	217	1743179564405361366	/home/amon/Code/cpp-class-exercises/lab2/Converter/converter	442505dc9fb2b7cc
+3	225	1743179564405361366	/home/amon/Code/cpp-class-exercises/lab2/NumberGame/numberGame	a3574409455db582
+3	227	1743179564405361366	/home/amon/Code/cpp-class-exercises/lab2/Date/date	8de3d8cc9b0b03cc
+3	229	1743179564405361366	/home/amon/Code/cpp-class-exercises/lab3/Task2/task2	a6b623c11a8cab88
+3	238	1743179564405361366	/home/amon/Code/cpp-class-exercises/lab2/ClockCalendar/clockCalendar	2a5d7c20188d6f1b
+3	243	1743179564405361366	/home/amon/Code/cpp-class-exercises/lab2/Changer/changer	207a76a6abecee5a
+2	248	1743179564405361366	/home/amon/Code/cpp-class-exercises/lab2/Calculator/calculator	46169f81a4404d15
+4	249	1743179564405361366	/home/amon/Code/cpp-class-exercises/lab3/Task5/task5	c9a4f5d9aa665794
+4	253	1743179564405361366	/home/amon/Code/cpp-class-exercises/lab3/Task3/task3	369522a6f046036d

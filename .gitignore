@@ -4,25 +4,3 @@
 !*/
 
 
-
-*.o
-
-*.gch
-
-*.so
-
-*.a
-
-*.out
-*.exe
-
-*.dSYM/
-*.stackdump
-*.core
-
-*~ 
-.*.swp
-.*.swo
-*.DS_Store
-
-/build/
