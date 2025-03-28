@@ -1,20 +1,26 @@
 #include "../include/calculator.hpp"
 
-float Calculator::add(float a, float b) { return a + b; }
-float Calculator::subtract(float a, float b) { return a - b; }
-float Calculator::multiply(float a, float b) { return a * b; }
-float Calculator::divide(float a, float b) { return a / b; }
+float Calculator::add(float leftOperand, float rightOperand) { return leftOperand + rightOperand; }
+float Calculator::subtract(float leftOperand, float rightOperand) {
+    return leftOperand - rightOperand;
+}
+float Calculator::multiply(float leftOperand, float rightOperand) {
+    return leftOperand * rightOperand;
+}
+float Calculator::divide(float leftOperand, float rightOperand) {
+    return leftOperand / rightOperand;
+}
 
-float Calculator::calculate(float a, char op, float b) {
-    switch (op) {
-        case '+':
-            return add(a, b);
-        case '-':
-            return subtract(a, b);
-        case '*':
-            return multiply(a, b);
-        case '/':
-            return divide(a, b);
+float Calculator::calculate(float leftOperand, Operation operation, float rightOperand) {
+    switch (operation.getSign()) {
+        case PLUS:
+            return add(leftOperand, rightOperand);
+        case MINUS:
+            return subtract(leftOperand, rightOperand);
+        case MULPTIPLY:
+            return multiply(leftOperand, rightOperand);
+        case DIVIDE:
+            return divide(leftOperand, rightOperand);
         default:
             return 0;
     }

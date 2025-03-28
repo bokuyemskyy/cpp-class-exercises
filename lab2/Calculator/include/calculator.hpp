@@ -1,15 +1,43 @@
 #ifndef CALCULATOR_HPP
 #define CALCULATOR_HPP
 
-class Calculator {
+#include <cstdint>
+enum OperationSign : uint8_t { NONE, PLUS, MINUS, MULPTIPLY, DIVIDE };
+class Operation {
    private:
-    float add(float a, float b);
-    float subtract(float a, float b);
-    float multiply(float a, float b);
-    float divide(float a, float b);
+    OperationSign operationSign = NONE;
 
    public:
-    float calculate(float a, char op, float b);
+    Operation(char operationChar) {
+        switch (operationChar) {
+            case '+':
+                operationSign = PLUS;
+                break;
+            case '-':
+                operationSign = MINUS;
+                break;
+            case '*':
+                operationSign = MULPTIPLY;
+                break;
+            case '/':
+                operationSign = DIVIDE;
+                break;
+            default:
+                break;
+        }
+    }
+    OperationSign getSign() { return operationSign; }
+};
+
+class Calculator {
+   private:
+    static float add(float leftOperand, float rightOperand);
+    static float subtract(float leftOperand, float rightOperand);
+    static float multiply(float leftOperand, float rightOperand);
+    static float divide(float leftOperand, float rightOperand);
+
+   public:
+    static float calculate(float leftOperand, Operation operation, float rightOperand);
 };
 
 #endif
