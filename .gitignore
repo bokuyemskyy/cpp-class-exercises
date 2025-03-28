@@ -20,4 +20,4 @@
 
 /build/
 
-CMakeLists.txt
+*.[^/]*
