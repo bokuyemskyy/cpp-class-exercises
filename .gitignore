@@ -1,3 +1,10 @@
+# Ignore no-extension files
+*
+!*.*
+!*/
+
+
+
 *.o
 
 *.gch
@@ -19,5 +26,3 @@
 *.DS_Store
 
 /build/
-
-*.[^/]*
