@@ -4,14 +4,17 @@ This repository contains my classwork and homework tasks for the *Programming La
 
 ## Build Instructions
 
-To automatically build all tasks into executables:
+1) To automatically build all tasks into executables:
 
 ```bash
 cmake -Bbuild
 cmake --build build
 ```
 
-To automatically remove all built executables:
+Each binary will appear in a correspondent task's directory.
+
+
+2) To automatically remove all built executables:
 
 ```bash
 cmake -Bbuild

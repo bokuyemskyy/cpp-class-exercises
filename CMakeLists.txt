@@ -2,9 +2,14 @@ cmake_minimum_required(VERSION 3.10)
 project(AllLabs)
 
 set(CMAKE_CXX_STANDARD 23)
-
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-message(${CMAKE_SOURCE_DIR})
+
+
+##### NAME FOR EXECUTABLE #####
+# configure this value if you want to give one name to all your binaries
+set(EXEC_NAME_FINAL "main")
+# comment the value or set "" if you want to use standard ones (lab_task) 
+
 
 file(GLOB LABS RELATIVE ${CMAKE_SOURCE_DIR} lab*)
 
@@ -38,6 +43,11 @@ foreach(lab ${LABS})
         RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL ${TASK_DIR}
         RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${TASK_DIR}
       )
+      if(EXEC_NAME_FINAL)
+        set_target_properties(${EXEC_NAME} PROPERTIES
+          OUTPUT_NAME ${EXEC_NAME_FINAL}
+        )
+      endif()
     endif()
   endforeach()
 endforeach()
@@ -47,3 +57,5 @@ add_custom_target(clear_bins
   COMMAND ${CMAKE_COMMAND} -DSRC_DIR=${CMAKE_SOURCE_DIR} -P ${CMAKE_SOURCE_DIR}/clear_bins.cmake
   COMMENT "Deleting all built binaries from bin/"
 )
+
+

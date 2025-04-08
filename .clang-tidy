@@ -1,6 +1,7 @@
 Checks: >
   -*,
   bugprone-*,
+  -bugprone-easily-swappable-parameters,
   cert-*,
   clang-analyzer-*,
   cppcoreguidelines-*,
@@ -12,5 +13,7 @@ Checks: >
   -readability-magic-numbers,
   -readability-named-parameter,
   -readability-function-cognitive-complexity,
+  -readability-identifier-length,
   misc-*,
+  -misc-use-anonymous-namespace,
   portability-*
