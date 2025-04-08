@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include <iostream>
 
-#include "include/date.hpp"
+#include "date.hpp"
 
 int main(int argc, char *argv[]) {
     Date date(1, 1, 1970);

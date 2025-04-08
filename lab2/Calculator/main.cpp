@@ -1,9 +1,9 @@
-#include <math.h>
+#include <cmath>
 
 #include <iostream>
 #include <sstream>
 
-#include "include/calculator.hpp"
+#include "calculator.hpp"
 
 int main() {
     Calculator calculator = Calculator();

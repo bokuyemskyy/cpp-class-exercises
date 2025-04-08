@@ -1,6 +1,0 @@
-add_subdirectory(Calculator)
-add_subdirectory(Changer)
-add_subdirectory(ClockCalendar)
-add_subdirectory(Converter)
-add_subdirectory(Date)
-add_subdirectory(NumberGame)

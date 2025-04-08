@@ -2,8 +2,8 @@
 #include <iomanip>
 #include <unordered_map>
 
-#include "include/date.hpp"
-#include "include/time.hpp"
+#include "date.hpp"
+#include "time.hpp"
 
 void outputCalendar(const Date &d, const Time &t) {
     std::unordered_map<int, std::string> months = {
