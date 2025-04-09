@@ -14,6 +14,7 @@ Checks: >
   -readability-named-parameter,
   -readability-function-cognitive-complexity,
   -readability-identifier-length,
+  -readability-isolate-declaration,
   misc-*,
   -misc-use-anonymous-namespace,
   portability-*
