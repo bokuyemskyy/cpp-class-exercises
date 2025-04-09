@@ -3,8 +3,9 @@
 #include <set>
 #include <string>
 #include <vector>
+
 int main() {
-    // ====== VECTOR ======
+    // vector
     std::vector<int> vec = {1, 2, 4, 8};
 
     vec.push_back(16);
@@ -19,7 +20,7 @@ int main() {
 
     vec.clear();
 
-    // ====== SET ======
+    // set
     std::set<double> set = {4.5, 3.2, 9.9};
 
     set.insert(5);
@@ -33,7 +34,7 @@ int main() {
 
     set.clear();
 
-    // ====== MAP ======
+    // map
     std::map<std::string, int> map;
 
     map["Test"] = 20;
