@@ -3,9 +3,10 @@
 #include <cstdio>
 #include <filesystem>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
+#include <sstream>
 #include <string>
-#include <utility>
 #include <vector>
 
 class Task {
@@ -44,23 +45,23 @@ class Task {
     void setDue(auto due) { m_due = due; }
 
     [[nodiscard]] std::string toCSV() const {
-        std::string created_dur = std::to_string(
-            std::chrono::duration_cast<std::chrono::seconds>(m_created.time_since_epoch()).count());
-        std::string due_dur = std::to_string(
-            std::chrono::duration_cast<std::chrono::seconds>(m_due.time_since_epoch()).count());
-
-        return m_name + "," + m_description + "," + created_dur + "," + due_dur;
+        auto created_dur =
+            std::chrono::duration_cast<std::chrono::seconds>(m_created.time_since_epoch()).count();
+        auto due_dur =
+            std::chrono::duration_cast<std::chrono::seconds>(m_due.time_since_epoch()).count();
+        return m_name + "," + m_description + "," + std::to_string(created_dur) + "," +
+               std::to_string(due_dur);
     }
 
-    static Task fromCSV(const std::string csv) {
+    static Task fromCSV(const std::string& csv) {
         std::istringstream ss(csv);
-        std::string name, description;
-        std::string created_dur, due_dur;
+        std::string name, description, created_dur, due_dur;
 
         std::getline(ss, name, ',');
         std::getline(ss, description, ',');
         std::getline(ss, created_dur, ',');
         std::getline(ss, due_dur);
+
         auto created = std::chrono::system_clock::from_time_t(std::stoi(created_dur));
         auto due = std::chrono::system_clock::from_time_t(std::stoi(due_dur));
 
@@ -72,9 +73,8 @@ class Task {
 
 static void saveTasksToFile(const std::vector<Task>& tasks, const std::string& filepath) {
     std::ofstream file(filepath);
-
     if (file.is_open()) {
-        for (const Task& task : tasks) {
+        for (const auto& task : tasks) {
             file << task.toCSV() << '\n';
         }
         file.close();
@@ -85,13 +85,11 @@ static void saveTasksToFile(const std::vector<Task>& tasks, const std::string& f
 
 static std::vector<Task> loadTasksFromFile(const std::string& filepath) {
     std::vector<Task> tasks;
-
     std::ifstream file(filepath);
-
     if (file.is_open()) {
         std::string line;
         while (std::getline(file, line)) {
-            tasks.emplace_back(Task::fromCSV(line));
+            tasks.push_back(Task::fromCSV(line));
         }
         file.close();
     } else {
@@ -101,7 +99,7 @@ static std::vector<Task> loadTasksFromFile(const std::string& filepath) {
 }
 
 static void addTask(const Task& task, std::vector<Task>& tasks, const std::string& filepath) {
-    tasks.emplace_back(task);
+    tasks.push_back(task);
     saveTasksToFile(tasks, filepath);
 }
 
@@ -113,23 +111,22 @@ static void removeTask(const Task& task, std::vector<Task>& tasks, const std::st
     saveTasksToFile(tasks, filepath);
 }
 
-static void writeTasks(const std::vector<Task>& tasks) {
+static void writeTasks(const std::vector<Task>& tasks, const std::string& name) {
+    std::cout << "======= " << name << " =======\n";
     if (tasks.empty()) {
-        std::cout << "No tasks available.\n";
+        std::cout << "No tasks here.\n";
         return;
     }
-    std::cout << "======= Task List =======\n";
     for (const auto& task : tasks) {
         std::time_t created = std::chrono::system_clock::to_time_t(task.getCreated());
-        auto due_raw = task.getDue();
         std::cout << "Task: " << task.getName() << "\n"
                   << "Description: " << task.getDescription() << "\n"
                   << "Created: " << std::put_time(std::localtime(&created), "%Y-%m-%d %H:%M:%S")
                   << "\n";
-        if (due_raw == std::chrono::system_clock::time_point{}) {
+        if (task.getDue() == std::chrono::system_clock::time_point{}) {
             std::cout << "No due time!\n";
         } else {
-            std::time_t due = std::chrono::system_clock::to_time_t(due_raw);
+            std::time_t due = std::chrono::system_clock::to_time_t(task.getDue());
             std::cout << "Due: " << std::put_time(std::localtime(&due), "%Y-%m-%d %H:%M:%S")
                       << "\n";
         }
@@ -139,32 +136,31 @@ static void writeTasks(const std::vector<Task>& tasks) {
 
 int main(int argc, char* argv[]) {
     std::filesystem::path storagePath = std::filesystem::canonical(argv[0]).parent_path();
-    std::string doneStorage = storagePath.string() + "/storage/done";
-    std::string pendingStorage = storagePath.string() + "/storage/pending";
+    std::string doneStorage = storagePath.string() + "/storage/done.csv";
+    std::string pendingStorage = storagePath.string() + "/storage/pending.csv";
 
-    std::vector<Task> done;
-    std::vector<Task> pending;
+    std::vector<Task> done = loadTasksFromFile(doneStorage);
+    std::vector<Task> pending = loadTasksFromFile(pendingStorage);
 
-    pending = loadTasksFromFile(pendingStorage);
-    done = loadTasksFromFile(doneStorage);
-
-    if (pending.size() == 0) {
+    if (pending.empty()) {
         addTask({"First task!", "This is the first task"}, pending, pendingStorage);
-        addTask({"Secondshow task!", "This is the second task with due date",
+        addTask({"Second task!", "This is the second task with due date",
                  std::chrono::system_clock::now() + std::chrono::hours(10)},
                 pending, pendingStorage);
     }
-    std::cout << "------ Pending tasks ------\n";
-    writeTasks(pending);
+
+    writeTasks(pending, "Pending tasks");
 
     bool running = true;
     while (running) {
+        system("clear");
+
         std::cout
             << "Possible commands:\nshow: shows all tasks\nadd: adds a task\ndone: finishes a "
-               "task\nremove: removes "
-               "a task\nEnter your command: \n";
+               "task\nremove: removes a task\nEnter your command: \n";
         std::string command;
         std::cin >> command;
+
         if (command == "add") {
             std::cout << "Enter the name: ";
             std::string name;
@@ -184,18 +180,20 @@ int main(int argc, char* argv[]) {
                         pending, pendingStorage);
             }
         }
+
         if (command == "done") {
             std::cout << "Enter the name: ";
             std::string name;
-            std::cin >> name;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::getline(std::cin, name);
             auto it = std::ranges::find(pending, Task(name, ""));
-
             if (it != pending.end()) {
                 Task temp = *it;
                 addTask(temp, done, doneStorage);
                 removeTask(temp, pending, pendingStorage);
             }
         }
+
         if (command == "remove") {
             std::cout << "Enter the name: ";
             std::string name;
@@ -203,12 +201,13 @@ int main(int argc, char* argv[]) {
             removeTask(Task(name, ""), pending, pendingStorage);
             removeTask(Task(name, ""), done, doneStorage);
         }
+
         if (command == "show") {
-            std::cout << "------ Pending tasks ------\n";
-            writeTasks(pending);
-            std::cout << "------ Done tasks ------\n";
-            writeTasks(done);
+            writeTasks(pending, "Pending tasks");
+            writeTasks(done, "Done tasks");
         }
-        std::cout << "\n\n";
+
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::getchar();
     }
 }

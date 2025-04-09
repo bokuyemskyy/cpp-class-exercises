@@ -1,5 +1,3 @@
-#include <string>
-#include <vector>
 #include <iostream>
 
 int main() {
@@ -10,5 +8,5 @@ int main() {
     std::cout << "int size: " << sizeof(i) << std::endl;
     std::cout << "double size: " << sizeof(d) << std::endl;
     std::cout << "char array size: " << sizeof(charArray) << std::endl;
-    std::cout << "char array length: " << sizeof(charArray)/sizeof(char) << std::endl;
+    std::cout << "char array length: " << sizeof(charArray) / sizeof(char) << std::endl;
 }
