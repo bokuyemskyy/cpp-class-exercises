@@ -1,49 +1,65 @@
-#include <iomanip>
 #include <iostream>
 #include <string>
-#include <vector>
 
-struct Product {
-    int id;
-    std::string name;
-    float price;
-    int quantity;
+class Product {
+   private:
+    int m_id;
+    std::string m_name;
+    float m_price;
+    int m_quantity;
+
+    static int s_totalProducts;
+    static float s_totalPrice;
+
+   public:
+    Product(int id, const std::string& name, float price, int quantity)
+        : m_id(id), m_name(name), m_price(price), m_quantity(quantity) {
+        s_totalProducts++;
+        s_totalPrice += m_price * m_quantity;
+    }
+    ~Product() {
+        s_totalProducts--;
+        s_totalPrice -= m_price * m_quantity;
+    }
+    void addProduct(int q) {
+        m_quantity += q;
+        s_totalPrice += m_price * q;
+    }
+    void removeProduct(int q) {
+        if (q > m_quantity) {
+            std::cout << "Not enough quantity to remove.\n";
+            return;
+        }
+        m_quantity -= q;
+        s_totalPrice -= m_price * q;
+    }
+    void display() const {
+        std::cout << "ID: " << m_id << std::endl;
+        std::cout << "Name: " << m_name << std::endl;
+        std::cout << "Price: $" << m_price << std::endl;
+        std::cout << "Quantity: " << m_quantity << std::endl;
+    }
+    static void displayTotal() {
+        std::cout << "Total products: " << s_totalProducts << std::endl;
+        std::cout << "Total price: $" << s_totalPrice << std::endl;
+    }
 };
 
-static void displayInventory(const std::vector<Product>& inventory) {
-    std::cout << std::left << std::setw(5) << "ID" << std::setw(15) << "Name" << std::setw(10)
-              << "Price" << std::setw(10) << "Quantity" << "\n";
-    for (auto const& product : inventory) {
-        std::cout << std::left << std::setw(5) << product.id << std::setw(15) << product.name
-                  << std::setw(10) << product.price << std::setw(10) << product.quantity << "\n";
-    }
-    std::cout << "\n";
-}
-
-static void addProduct(std::vector<Product>& inventory, const Product& newProduct) {
-    inventory.emplace_back(newProduct);
-}
-
-static void removeProduct(std::vector<Product>& inventory, int id) {
-    for (auto it = inventory.begin(); it != inventory.end(); it++) {
-        if (it->id == id) {
-            inventory.erase(it);
-        }
-    }
-}
+int Product::s_totalProducts = 0;
+float Product::s_totalPrice = 0.0;
 
 int main() {
-    std::vector<Product> inventory = {{.id = 1, .name = "Keyboard", .price = 49.99, .quantity = 10},
-                                      {.id = 2, .name = "Mouse", .price = 25.50, .quantity = 25},
-                                      {.id = 3, .name = "Monitor", .price = 199.99, .quantity = 5}};
+    Product p1(101, "Keyboard", 2.0, 10);
+    Product p2(102, "Mouse", 1.0, 15);
 
-    displayInventory(inventory);
+    p1.display();
+    p2.display();
+    Product::displayTotal();
 
-    std::cout << "\nAdding new product\n";
-    addProduct(inventory, {.id = 4, .name = "Headphones", .price = 89.99, .quantity = 8});
-    displayInventory(inventory);
+    p1.addProduct(5);
+    p2.removeProduct(10);
 
-    std::cout << "\nRemoving product with id = 2\n";
-    removeProduct(inventory, 2);
-    displayInventory(inventory);
+    Product::displayTotal();
+
+    return 0;
 }

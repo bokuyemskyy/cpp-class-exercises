@@ -1,67 +1,59 @@
-#include <cassert>
 #include <cmath>
 #include <iostream>
+#include <memory>
 #include <numbers>
-#include <variant>
+#include <vector>
 
-constexpr float PI = std::numbers::pi_v<float>;
-
-struct Circle {
-    float radius;
-
-    [[nodiscard]] float area() const { return PI * radius * radius; }
-    [[nodiscard]] float perimeter() const { return 2 * PI * radius; }
+class Shape {
+   public:
+    [[nodiscard]] virtual double area() const = 0;
+    [[nodiscard]] virtual double perim() const = 0;
+    virtual ~Shape() {}
 };
 
-struct Rectangle {
-    float width;
-    float height;
+class Circle : public Shape {
+   private:
+    double m_r;
 
-    [[nodiscard]] float area() const { return width * height; }
-    [[nodiscard]] float perimeter() const { return 2 * (width + height); }
+   public:
+    Circle(double r) : m_r(r) {}
+    [[nodiscard]] double area() const override { return std::numbers::pi * m_r * m_r; }
+    [[nodiscard]] double perim() const override { return 2 * std::numbers::pi * m_r; }
 };
 
-struct Triangle {
-    float a, b, c;
+class Rectangle : public Shape {
+   private:
+    double m_w, m_h;
 
-    [[nodiscard]] float area() const {
-        float s = (a + b + c) / 2;
-        return std::sqrt(s * (s - a) * (s - b) * (s - c));
+   public:
+    Rectangle(double w, double h) : m_w(w), m_h(h) {}
+    [[nodiscard]] double area() const override { return m_w * m_h; }
+    [[nodiscard]] double perim() const override { return 2 * (m_w + m_h); }
+};
+
+class Triangle : public Shape {
+   private:
+    double m_a, m_b, m_c;
+
+   public:
+    Triangle(double a, double b, double c) : m_a(a), m_b(b), m_c(c) {}
+    [[nodiscard]] double area() const override {
+        double s = (m_a + m_b + m_c) / 2;
+        return sqrt(s * (s - m_a) * (s - m_b) * (s - m_c));
     }
-    [[nodiscard]] float perimeter() const { return a + b + c; }
+    [[nodiscard]] double perim() const override { return m_a + m_b + m_c; }
 };
-
-using Shape = std::variant<Circle, Rectangle, Triangle>;
-
-float getArea(const Shape& shape) {
-    return std::visit([](const auto& s) { return s.area(); }, shape);
-}
-
-float getPerimeter(const Shape& shape) {
-    return std::visit([](const auto& s) { return s.perimeter(); }, shape);
-}
-
-void printShape(const Shape& shape) {
-    std::visit(
-        [](const auto& s) {
-            std::cout << "Area: " << s.area() << ", Perimeter: " << s.perimeter() << '\n';
-        },
-        shape);
-}
 
 int main() {
-    Shape c = Circle{5.0F};
-    Shape r = Rectangle{.width = 4.0f, .height = 6.0f};
-    Shape t = Triangle{.a = 3.0f, .b = 4.0f, .c = 5.0f};
+    std::vector<std::unique_ptr<Shape>> shapes;
 
-    std::cout << "Circle: ";
-    printShape(c);
+    shapes.push_back(std::make_unique<Circle>(3));
+    shapes.push_back(std::make_unique<Rectangle>(4, 5));
+    shapes.push_back(std::make_unique<Triangle>(3, 4, 5));
 
-    std::cout << "Rectangle: ";
-    printShape(r);
-
-    std::cout << "Triangle: ";
-    printShape(t);
+    for (const auto& shape : shapes) {
+        std::cout << "Area: " << shape->area() << ", perimeter: " << shape->perim() << '\n';
+    }
 
     return 0;
 }
