@@ -61,6 +61,7 @@ class TextEditor {
     void editLine() {
         int i = inputLineNumber();
         if (i < 0) return;
+
         pushState();
         if (i >= m_lines.size()) m_lines.resize(i + 1);
         std::cout << "Current: " << m_lines[i] << "\nNew: ";
@@ -71,6 +72,7 @@ class TextEditor {
     void cutLine() {
         int i = inputLineNumber();
         if (i < 0 || i >= m_lines.size()) return;
+
         pushState();
         m_copyBuffer = m_lines[i];
         m_lines.erase(m_lines.begin() + i);
@@ -79,6 +81,7 @@ class TextEditor {
     void copyLine() {
         int i = inputLineNumber();
         if (i < 0 || i >= m_lines.size()) return;
+
         m_copyBuffer = m_lines[i];
     }
 

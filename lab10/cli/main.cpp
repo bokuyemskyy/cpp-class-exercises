@@ -96,6 +96,7 @@ void echo(const std::vector<std::string>& args) {
 void date() {
     auto now = std::chrono::system_clock::now();
     std::time_t t = std::chrono::system_clock::to_time_t(now);
+
     std::cout << std::ctime(&t);
 }
 
@@ -107,12 +108,12 @@ void help() {
                  " cat <file>   Show file content\n"
                  " touch <file> Create empty file\n"
                  " rm <file>    Remove file\n"
-                 " mkdir <dir>  Create directory\n"
-                 " rmdir <dir>  Remove directory\n"
+                 " mkdir <dir>  Create dir\n"
+                 " rmdir <dir>  Remove dir\n"
                  " echo <text>  Print text\n"
-                 " date         Show current date/time\n"
-                 " help         Show this help\n"
-                 " exit         Exit shell\n";
+                 " date         Showthe datetime\n"
+                 " help         Show help\n"
+                 " exit         Exit \n";
 }
 
 int main() {
