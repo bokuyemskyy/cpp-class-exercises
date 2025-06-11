@@ -1,7 +1,10 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.25)
 project(AllLabs)
 
 set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 
@@ -58,7 +61,7 @@ endforeach()
 
 
 add_custom_target(clear_bins
-  COMMAND ${CMAKE_COMMAND} -DSRC_DIR=${CMAKE_SOURCE_DIR} -P ${CMAKE_SOURCE_DIR}/clear_bins.cmake
+  COMMAND ${CMAKE_COMMAND} -DSRC_DIR=${CMAKE_SOURCE_DIR} -DEXEC_NAME_FINAL=${EXEC_NAME_FINAL} -P ${CMAKE_SOURCE_DIR}/clear_bins.cmake
   COMMENT "Deleting all built binaries from bin/"
 )
 

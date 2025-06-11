@@ -14,7 +14,7 @@ static void printVector(const std::vector<T>& vec) {
 int main() {
     // std::iota
     std::vector<int> vec(10);
-    std::ranges::iota(vec, 1);
+    std::iota(vec.begin(), vec.end(), 1);
     std::cout << "Vector after std::iota: ";
     printVector(vec);
 

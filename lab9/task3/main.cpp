@@ -3,8 +3,9 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <limits>
 
-class Cipherer {
+class Encryptor {
     const std::string key = "key12311!?";
 
    public:
@@ -35,7 +36,7 @@ class PasswordManager {
     bool authenticated = false;
 
     std::vector<Entry> entries;
-    Cipherer cipherer;
+    Encryptor encryptor;
     const std::string data_file = "passwords.data";
 
    public:
@@ -110,7 +111,7 @@ class PasswordManager {
             if (!std::getline(iss, username, '|')) continue;
             if (!std::getline(iss, encrypted_password)) continue;
 
-            std::string decrypted_password = cipherer.decrypt(encrypted_password);
+            std::string decrypted_password = encryptor.decrypt(encrypted_password);
             entries.emplace_back(app, username, decrypted_password);
         }
     }
@@ -118,7 +119,7 @@ class PasswordManager {
     void save() {
         std::ofstream file(data_file, std::ios::binary | std::ios::trunc);
         for (const auto& c : entries) {
-            std::string encrypted_password = cipherer.encrypt(c.password);
+            std::string encrypted_password = encryptor.encrypt(c.password);
             file << c.app << "|" << c.username << "|" << encrypted_password << "\n";
         }
     }

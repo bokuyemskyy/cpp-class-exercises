@@ -1,19 +1,9 @@
-file(GLOB_RECURSE BINARIES
-    "${SRC_DIR}/lab*/**/*"
+file(GLOB_RECURSE MAIN_CANDIDATES
+    "${SRC_DIR}/lab*/**/${EXEC_NAME_FINAL}"
 )
 
-foreach(BIN IN LISTS BINARIES)
-    get_filename_component(EXT "${BIN}" EXT)
-
-    if(EXT STREQUAL ".cpp" OR EXT STREQUAL ".hpp")
-        list(REMOVE_ITEM BINARIES ${BIN})
+foreach(MAIN_BIN ${MAIN_CANDIDATES})
+    if(EXISTS "${MAIN_BIN}")
+        file(REMOVE "${MAIN_BIN}")
     endif()
 endforeach()
-
-foreach(BIN ${BINARIES})
-    if(EXISTS "${BIN}" AND IS_EXECUTABLE "${BIN}")
-        file(REMOVE "${BIN}")
-    endif()
-endforeach()
-
-#file(REMOVE "${BIN}")
