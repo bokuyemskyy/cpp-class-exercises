@@ -60,10 +60,17 @@ void rm(const std::vector<std::string>& args) {
     }
 
     std::error_code ec;
-    if (!fs::remove(args[1], ec) || ec) {
+    fs::path p = args[1];
+    if (fs::is_directory(p, ec)) {
+        std::cerr << "rm: cannot remove directory '" << p.string() << "' (use rmdir)\n";
+        return;
+    }
+
+    if (!fs::remove(p, ec) || ec) {
         std::cerr << "rm: " << (ec ? ec.message() : "failed to remove file") << "\n";
     }
 }
+
 
 void mkdir(const std::vector<std::string>& args) {
     if (args.size() < 2) {
@@ -83,10 +90,17 @@ void rmdir(const std::vector<std::string>& args) {
         return;
     }
     std::error_code ec;
-    if (!fs::remove(args[1], ec) || ec) {
+    fs::path p = args[1];
+    if (!fs::is_directory(p, ec)) {
+        std::cerr << "rmdir: '" << p.string() << "' is not a directory\n";
+        return;
+    }
+
+    if (!fs::remove(p, ec) || ec) {
         std::cerr << "rmdir: " << (ec ? ec.message() : "failed to remove directory") << "\n";
     }
 }
+
 
 void echo(const std::vector<std::string>& args) {
     for (size_t i = 1; i < args.size(); ++i)
@@ -119,6 +133,9 @@ void help() {
 int main() {
     std::string line;
     while (true) {
+        std::cin.clear(); 
+        std::cin.sync(); 
+        
         std::cout << "$ ";
         if (!std::getline(std::cin, line)) break;
 
