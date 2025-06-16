@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.25)
 project(AllLabs)
 
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -12,10 +12,9 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
 endif()
 
-##### NAME FOR EXECUTABLE #####
-# configure this value if you want to give one name to all your binaries
+
+
 set(EXEC_NAME_FINAL "main")
-# comment the value or set "" if you want to use standard ones (lab_task) 
 
 
 file(GLOB LABS RELATIVE ${CMAKE_SOURCE_DIR} lab*)
@@ -47,8 +46,6 @@ foreach(lab ${LABS})
         RUNTIME_OUTPUT_DIRECTORY ${TASK_DIR}
         RUNTIME_OUTPUT_DIRECTORY_DEBUG ${TASK_DIR}
         RUNTIME_OUTPUT_DIRECTORY_RELEASE ${TASK_DIR}
-        RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL ${TASK_DIR}
-        RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${TASK_DIR}
       )
       if(EXEC_NAME_FINAL)
         set_target_properties(${EXEC_NAME} PROPERTIES
@@ -60,8 +57,19 @@ foreach(lab ${LABS})
 endforeach()
 
 
+set(HUB_DIR "${CMAKE_SOURCE_DIR}/hub")
+if(EXISTS "${HUB_DIR}/main.cpp")
+  add_executable(main "${HUB_DIR}/main.cpp")
+  set_target_properties(main PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${HUB_DIR}"
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG "${HUB_DIR}"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${HUB_DIR}"
+  )
+endif()
+
+
 add_custom_target(clear_bins
-  COMMAND ${CMAKE_COMMAND} -DSRC_DIR=${CMAKE_SOURCE_DIR} -DEXEC_NAME_FINAL=${EXEC_NAME_FINAL} -P ${CMAKE_SOURCE_DIR}/clear_bins.cmake
+  COMMAND ${CMAKE_COMMAND} -DSRC_DIR=${CMAKE_SOURCE_DIR} -DEXEC_NAME_FINAL=${EXEC_NAME_FINAL} -P ${CMAKE_SOURCE_DIR}/ClearBins.cmake
   COMMENT "Deleting all built binaries from bin/"
 )
 

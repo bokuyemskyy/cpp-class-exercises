@@ -149,8 +149,8 @@ int main(int argc, char* argv[]) {
     std::vector<Contact> contacts = loadContactsFromFile(contactsStorage);
 
     if (contacts.empty()) {
-        addContact({"John Doe", "555-1234", "john@example.com"}, contacts, contactsStorage);
-        addContact({"Jane Smith", "555-5678", "jane@example.com"}, contacts, contactsStorage);
+        addContact({"John Doe", "123-1234", "john@example.com"}, contacts, contactsStorage);
+        addContact({"John Pork", "666-6666", "p@gmail.com"}, contacts, contactsStorage);
     }
 
     int choice = 0;
