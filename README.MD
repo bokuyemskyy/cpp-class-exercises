@@ -1,11 +1,11 @@
-## Programming Languages 2 course
+## agh-cpp
 
 This repository is my classwork for the *Programming Languages 2* course
 
 ### Requirements
 
-* **C++ Standard:** C++20 (Compiler must support C++20 features)
-* **CMake Version:** 3.25 or newer
+* C++20 standart (Compiler must support C++20 features)
+* CMake 3.25 or newer
 
 ### Build Instructions
 
@@ -30,4 +30,3 @@ Each binary will appear in a correspondent task's directory.
 ```bash
 cmake --build build --target clear_bins
 ```
-
