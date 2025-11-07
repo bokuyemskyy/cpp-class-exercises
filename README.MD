@@ -1,6 +1,6 @@
 ## agh-cpp
 
-This repository is my classwork for the *Programming Languages 2* course
+This repository is my classwork for the **Programming Languages 2** course
 
 ### Requirements
 
